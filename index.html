@@ -123,32 +123,16 @@
 </section>
 
 
-<!-- Teaser video-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- End teaser video -->
 
 <!-- Paper abstract -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3">Overview</h2>
         <div class="content has-text-justified">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
+            While standard Empirical Risk Minimization (ERM) training is proven effective for image classification on in-distribution data, it fails to perform well on out-of-distribution samples. One of the main sources of distribution shift for image classification is the compositional nature of images. Specifically, in addition to the main object or component(s) determining the label, some other image components usually exist, which may lead to the shift of input distribution between train and test environments. More importantly, these components may have spurious correlations with the label. To address this issue, we propose Decompose-and-Compose (DaC), which improves robustness to correlation shift by a compositional approach based on combining elements of images. Based on our observations, models trained with ERM usually highly attend to either the causal components or the components having a high spurious correlation with the label (especially in datapoints on which models have a high confidence). In fact, according to the amount of spurious correlation and the easiness of classification based on the causal or non-causal components, the model usually attends to one of these more (on samples with high confidence). Following this, we first try to identify the causal components of images using class activation maps of models trained with ERM. Afterward, we intervene on images by combining them and retraining the model on the augmented data, including the counterfactual ones. Along with its high interpretability, this work proposes a group-balancing method by intervening on images without requiring group labels or information regarding the spurious features during training. The method has an overall better worst group accuracy compared to previous methods with the same amount of supervision on the group labels in correlation shift.  
           </p>
         </div>
       </div>
@@ -159,100 +143,112 @@
 
 
 <!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3"> Identifing the causal componant </h2>
       </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <div style="text-align: left;">
+          <img id="model" src="static/images/Causal.png" alt="Causal Model Image" style="width: 100%; height: auto;">
+          <h3 class="subtitle" style="font-family: 'Times New Roman', Times, serif;">
+            <p><b>Figure 1. Behaviour of a model trained with standard ERM in different datasets. Based on the easiness of inferring the label from the
+              causal or non-causal parts across the whole dataset, the model attends more to one of them, this behaviour is more evident on samples on
+              which the model has a low loss. (a), (b) Average xGradCAM score of Cifar10 (causal) and and MNIST (non-causal) pixels in four loss
+              quantiles of the Dominos train set. The model generally attends more to the non-causal parts, and as the loss decreases, the non-causal
+              attention increases. (c), (d) Average xGradCAM score of foreground (causal) and background (non-causal) pixels in four loss quantiles of
+              the Waterbirds train set. The model generally pays attention to the causal parts, and as the loss decreases, the causal attention increases.</b></p>
+          </h3>
+        </div>
       </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
     </div>
   </div>
-</div>
-</div>
 </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3"> Intervening on images </h2>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <div style="text-align: left;">
+          <img id="model" src="static/images/‌DAC - Copy.png" alt="Causal Model Image" style="width: 100%; height: auto;">
+          <h3 class="subtitle" style="font-family: 'Times New Roman', Times, serif; justify-content:end;">
+            <p><b>Figure 2. An overview of our DaC method.First, we choose one of these assumptions: the mask or its inverse captures the core parts more effectively. Then, we select low-loss images and merge images with different labels. </b></p>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background-color:white;">
+
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Masking process</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-centered">
+      <div style="width:90%;">
+
+        <div style="float:left; width:47.1%; border: 0px solid black;">
+          <h2 class="title is-5">Adaptive masking</h2>
+          <div class="content has-text-justified">
+            When gradually masking an image, the less predictive parts are masked out first, causing minimal impact on the loss. However, as more of the image, including the predictive parts, is masked, the loss increases rapidly because the model struggles to predict the label. Thus, the optimal masking portion is just before this rapid increase in loss.
+          </div>  
+
+          <div class="column is-five-fifths">
+              <div class="columns is-centered">
+                <img id="modulated_training" width="105%" src="static/images/Adaptive.png">
+              </div>
+          </div>
+        </div>
+
+        <div style=" float:right; width:47.8%; border: 0px solid black;">
+          <h2 class="title is-5"> Mask and Combine</h2>
+          <div class="content has-text-justified">
+            The two input images with different labels are masked using Adaptive masking. Then, the selected part of one image and the masked parts of the other image are combined, with the remaining gaps filled using the mean value of the batch. The new combined image retains the label of the first image and is used for training the last layer of the model. 
+          </div>
+
+          <div class="column is-five-fifths">
+              <div class="columns is-centered">
+                <img id="modulated_training" width="97%" src="static/images/MaskCombine.png">
+              </div>
+          </div>
+        </div>
+
+      </div>  
+    </div>
+  
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <h2 class="subtitle has-text-centered">
+          <p style="font-family:Times New Roman">
+            <b>
+              Figure 3.
+            </b></p>
+        </h2>
+      </div>
+    </div>
+</section>
+
+
 <!-- End image carousel -->
 
 
 
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- Youtube embed code here -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End youtube video -->
-
-
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End video carousel -->
 
 
 
@@ -265,7 +261,7 @@
     <div class="container">
       <h2 class="title">Poster</h2>
 
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
+      <iframe  src="static/pdfs/output_11.pdf" width="100%" height="550">
           </iframe>
         
       </div>
@@ -278,7 +274,15 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>BibTex Code Here</code></pre>
+      <pre><code>
+        @misc{noohdani2024decomposeandcompose,
+        title={Decompose-and-Compose: A Compositional Approach to Mitigating Spurious Correlation}, 
+        author={Fahimeh Hosseini Noohdani and Parsa Hosseini and Aryan Yazdan Parast and Hamidreza Yaghoubi Araghi and Mahdieh Soleymani Baghshah},
+        year={2024},
+        eprint={2402.18919},
+        archivePrefix={arXiv},
+        primaryClass={id='cs.CV' full_name='Computer Vision and Pattern Recognition' is_active=True alt_name=None in_archive='cs' is_general=False description='Covers image processing, computer vision, pattern recognition, and scene understanding. Roughly includes material in ACM Subject Classes I.2.10, I.4, and I.5.'}
+  }</code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
